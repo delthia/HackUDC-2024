@@ -1,0 +1,34 @@
+{% extends "disposicion.html" %}
+{% block content %}
+
+<div class="contenido">
+    <h1>Hola, cliente nº {{ cliente }}</h1>
+    <script src="/api/consumo/rango?cliente={{ cliente }}&inicio=2022-07-01&fin=2022-07-02"></script>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: fechas,
+        datasets: [{
+        label: 'kWh',
+        data: datos,
+        borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
+    }
+    });
+    </script>
+</div>
+
+{% endblock content %}
