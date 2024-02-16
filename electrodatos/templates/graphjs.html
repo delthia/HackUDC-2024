@@ -1,6 +1,6 @@
 {% extends "disposicion.html" %}
 {% block content %}
-<script src="../datos-ejemplo/10"></script>
+<script src="../datos-ejemplo/10/2022-7-1/2022-7-2"></script>
 <div>
     <canvas id="myChart"></canvas>
 </div>
@@ -8,11 +8,11 @@
 const ctx = document.getElementById('myChart');
 
 new Chart(ctx, {
-  type: 'bar',
+  type: 'line',
   data: {
     labels: fechas,
     datasets: [{
-      label: '# of Votes',
+      label: 'kWh',
       data: datos,
       borderWidth: 1
     }]
