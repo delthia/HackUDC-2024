@@ -1,5 +1,7 @@
 # ElektroGraphs
 
+> Reto de Gradiant para la HackUDC 2024 organizada por GPUL en la Facultade de Infomática de la Universidade da Coruña. 16, 17, 18 de febrero de 2024
+
 Es difícil entender una factura eléctrica. A menudo, nos sentimos abrumados ante las varias páginas de información que, como consumidores no somos capaces de interpretar.
 
 ElektroGraphs proporciona una aplicación web en la que el usuario puede encontrar gráficas que le ayude a ser más consciente de su consumo energético. La web presenta unas gráficas interactivas sencillas de entender para un consumidor medio, en las que podrá ver su consumo en un período de tiempo a seleccionar y comparar los datos con los del año anterior, entre otras funcionalidades.
