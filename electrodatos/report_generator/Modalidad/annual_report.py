@@ -1,4 +1,3 @@
-from calendar import month_name
 from .report_gen import ReportGenerator
 from math import ceil
 import pandas as pd
@@ -9,30 +8,26 @@ class AnnualReport(ReportGenerator):
         self.id_client = id_client
         self.year = year
         super().__init__(id_client)
-    
-    @property
-    def year_db(self) -> pd.DataFrame:
-        return self.database[self.database['Year'] == self.year]
+        self.__df_client = self.database[self.database['Year'] == self.year]
     
     @property
     def monthly_comparison(self) -> pd.DataFrame:
         """Presenta el consumo eléctrico de cada mes"""
-        df_monthcons = self.year_db.groupby(by = 'Month').agg({'Consumo': 'sum'})
+        df_monthcons = self.database.groupby(by = 'Month').agg({'Consumo': 'sum'})
         df_monthcons.sort_index(inplace = True)
         if df_monthcons.shape[0] < 12:
             df_monthcons = df_monthcons.reindex(range(1, 13), fill_value=0)
-        # df_monthcons.index = [month_name[m] for m in df_monthcons.index]
         return df_monthcons
     
     @property
     def trimestral_comparison(self) -> pd.DataFrame:
         """Presenta el consumo eléctrico de cada trimestre""" 
-        q_trims = ceil(self.year_db['Month'].max() / 3)
+        q_trims = ceil(self.database['Month'].max() / 3)
         trims = pd.cut(
-            self.year_db['Month'], 
+            self.database['Month'], 
             bins = q_trims, 
             labels = ['Trim_%d'%(i+1) for i in range(q_trims)])
-        df_trimcons = self.year_db.copy()
+        df_trimcons = self.database.copy()
         df_trimcons['Trim'] = trims
         df_trimcons = df_trimcons.groupby(by = 'Trim').agg({'Consumo': 'sum'})
         return df_trimcons

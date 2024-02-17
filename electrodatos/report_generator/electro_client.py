@@ -15,8 +15,8 @@ class ClientElectro:
             return DayReport(self.id_client, date)
 
 if __name__ == '__main__':
-    client_0 = ClientElectro(id_client = 0)
+    client_0 = ClientElectro(id_client = 7)
     # inicio = date(2022, 1, 1); fin = date(2022, 12, 31)
     # reporte_client_0 = client_0.electro_report('Annual', 2023)
-    x = client_0.electro_report('Monthly', 2023, 1).max_consumption#.range_consume(inicio, fin)
-    print(x)
+    x = client_0.electro_report('Monthly', 2023, 9)#.range_consume(inicio, fin)
+    print(x.week_comparison, x.database)

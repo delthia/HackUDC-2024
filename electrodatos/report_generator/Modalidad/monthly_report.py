@@ -5,8 +5,5 @@ class MonthlyReport(ReportGenerator):
         super().__init__(id_client)
         self.year = year
         self.month = month
-    
-    @property
-    def month_db(self):
-        return self.database[(self.database['Year'] == self.year) & 
+        self__df_client = self.database[(self.database['Year'] == self.year) & 
                              (self.database['Month'] == self.month)]
