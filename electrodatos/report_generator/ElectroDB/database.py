@@ -1,3 +1,4 @@
+from datetime import date
 import pandas as pd
 
 class ConsumoElectrico:
@@ -50,5 +51,5 @@ class ConsumoElectrico:
         return self.__df_electrodatos
 
 if __name__ == '__main__':
-    consumo = ConsumoElectrico()
-    print(consumo.database['WeekDay'].value_counts())
+    consumo = ConsumoElectrico().database
+    print(consumo[consumo['Fecha'] == date(2023, 1, 2)])

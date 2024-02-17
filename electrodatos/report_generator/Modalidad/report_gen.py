@@ -1,5 +1,5 @@
-# from electrodatos.report_generator.ElectroDB import electro_data
-from ElectroDB import electro_data
+from electrodatos.report_generator.ElectroDB import electro_data
+# from ElectroDB import electro_data
 import pandas as pd
 
 class ReportGenerator:

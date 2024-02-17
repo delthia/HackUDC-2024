@@ -34,7 +34,7 @@ def api_rango():
 def api_dia():
     id_cliente = request.args.get('cliente', type=int)
     fecha = date.fromisoformat(request.args.get('fecha', type=str))
-    dia = ClientElectro(id_cliente).electro_report('Day', date=fecha).day_db
+    dia = ClientElectro(id_cliente).electro_report('Day', date=fecha).day_consume
 
     print(dia)
 
