@@ -1,4 +1,5 @@
-from electrodatos.report_generator.Modalidad import AnnualReport, MonthlyReport, DayReport
+# from electrodatos.report_generator.Modalidad import AnnualReport, MonthlyReport, DayReport
+from Modalidad import AnnualReport, MonthlyReport, DayReport
 from datetime import datetime
 
 class ClientElectro:
@@ -15,8 +16,8 @@ class ClientElectro:
             return DayReport(self.id_client, date)
 
 if __name__ == '__main__':
-    client_0 = ClientElectro(id_client = 7)
+    client_0 = ClientElectro(id_client = 4)
     # inicio = date(2022, 1, 1); fin = date(2022, 12, 31)
     # reporte_client_0 = client_0.electro_report('Annual', 2023)
-    x = client_0.electro_report('Monthly', 2023, 9)#.range_consume(inicio, fin)
-    print(x.week_comparison, x.database)
+    x = client_0.electro_report('Annual', year = 2023)#.range_consume(inicio, fin)
+    print(x.annual_comparison(), x.database)

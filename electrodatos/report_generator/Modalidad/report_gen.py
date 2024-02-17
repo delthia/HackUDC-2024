@@ -1,4 +1,5 @@
-from electrodatos.report_generator.ElectroDB import electro_data
+# from electrodatos.report_generator.ElectroDB import electro_data
+from ElectroDB import electro_data
 import pandas as pd
 
 class ReportGenerator:
@@ -10,8 +11,12 @@ class ReportGenerator:
     def database(self) -> pd.DataFrame:
         return self.__df_client
     
+    @database.setter
+    def database(self, new_db: pd.DataFrame) -> None:
+        self.__df_client = new_db
+    
     @property
-    def week_comparison(self) -> pd.DataFrame:
+    def weekday_comparison(self) -> pd.DataFrame:
         """Presenta el consumo eléctrico promedio durante la semana.
         
         Esta relación permite conocer en qué día de la semana se realiza

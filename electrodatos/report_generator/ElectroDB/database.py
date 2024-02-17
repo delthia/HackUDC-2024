@@ -37,6 +37,8 @@ class ConsumoElectrico:
             lambda x: x.year)
         self.__df_electrodatos['Month'] = self.__df_electrodatos['Fecha'].apply(
             lambda x: x.month)
+        self.__df_electrodatos['Day'] = self.__df_electrodatos['Fecha'].apply(
+            lambda x: x.day)
         self.__df_electrodatos['WeekDay'] = self.__df_electrodatos['Fecha'].apply(
             lambda x: x.weekday())
         
@@ -49,4 +51,4 @@ class ConsumoElectrico:
 
 if __name__ == '__main__':
     consumo = ConsumoElectrico()
-    print(consumo.database.head())
+    print(consumo.database['WeekDay'].value_counts())

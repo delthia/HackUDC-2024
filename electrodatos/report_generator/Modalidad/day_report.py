@@ -5,7 +5,7 @@ class DayReport(ReportGenerator):
     def __init__(self, id_client: int, date: datetime):
         self.date = date
         super().__init__(id_client)
-        self.__df_client = self.database[self.database['Fecha'] == self.date]
+        self.database = self.database[self.database['Fecha'] == self.date]
     
     @property
     def day_consume(self):
