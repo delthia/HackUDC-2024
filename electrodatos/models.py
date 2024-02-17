@@ -1,23 +1,22 @@
-from electro_db import ConsumoElectrico
+from report_generator import ClienteElectro
 import pandas as pd
 import requests, json
 
-class Electrodata():
+class Electrodata:
     def __init__(self, ruta):
-        self.datos = ConsumoElectrico(path = ruta)
-        self.datos.rename(
-            columns = {
-                'Código universal de punto de suministro': 'Cliente',
-                },
-            inplace = True)
-        self.datos['etiqueta'] = self.datos['datetime']
-        self.datos['datetime'] = pd.to_datetime(self.datos['datetime'], format = '%Y-%m-%d %H:%M:%S')
+        cliente0 = ClienteElectro(id_cliente = 0)
+        # self.datos = ConsumoElectrico(path = ruta)
+        # self.datos.rename(
+        #     columns = {
+        #         'Código universal de punto de suministro': 'Cliente',
+        #         },
+        #     inplace = True)
+        # self.datos['etiqueta'] = self.datos['datetime']
+        # self.datos['datetime'] = pd.to_datetime(self.datos['datetime'], format = '%Y-%m-%d %H:%M:%S')
 
-    def cabeza(self, nrows):    # Un ejemplo
-        return self.datos.head(nrows)
-
-    def cola(self, nrows):
-        return self.datos.tail(nrows)
+    def annual_report(self):
+        """Reporte anual del consumo electrico del cliente"""
+        pass
 
     def suministro(self, id_suministro):
         pass

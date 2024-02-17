@@ -1,5 +1,5 @@
-from ElectroDB import electro_data
 from calendar import month_name
+from electrodatos.report_generator.ElectroDB import electro_data
 from math import ceil
 import pandas as pd
 
@@ -11,7 +11,7 @@ class AnnualReport:
         self.__data_client = electro_data[electro_data['Cliente'] == id_client]
     
     @property
-    def database(self):
+    def database(self) -> pd.DataFrame:
         return self.__data_client[self.__data_client['Year'] == self.year]
     
     @property
@@ -52,7 +52,7 @@ class AnnualReport:
         return df_weekcons
     
     @property
-    def max_consumption(self):
+    def max_consumption(self) -> pd.DataFrame:
         """Identifica en qué momento del dia se realiza el mayor consumo eléctrico
         
         En qué hora del día se consume más de media entre todos los días del año
@@ -61,8 +61,16 @@ class AnnualReport:
         df_timecons.sort_index(inplace = True)
         return df_timecons
     
+    def range_consume(self, inicio, fin) -> pd.DataFrame:
+        """Consumo electrico en la un rango establecido"""
+        df_rangecons = self.__data_client[
+            (inicio <= self.__data_client.Fecha) &
+            (self.__data_client.Fecha <= fin)
+            ]
+        return df_rangecons.loc[:, ['Fecha', 'Consumo']]
+    
     @property
-    def annual_comparison(self):
+    def annual_comparison(self) -> pd.DataFrame:
         """Comparación con el año anterior"""
         df_oldata = AnnualReport(id_client = self.id_client, year = self.year - 1)
         df_comparison = pd.merge(

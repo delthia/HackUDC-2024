@@ -9,7 +9,7 @@ class ConsumoElectrico:
     """
     def __init__(self):
         self.__df_electrodatos = pd.read_csv(
-            '/home/carlosfol/My_Documents/Git_Projects/ElectroDatos/HackUDC-2024/electrodatos/datos/electrodatos.csv'
+            'electrodatos/datos/electrodatos.csv'
             )
         self.__df_electrodatos.rename(
             columns = {
