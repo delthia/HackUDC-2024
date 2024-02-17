@@ -1,4 +1,5 @@
 import pandas as pd
+import requests, json
 
 class Electrodata():
     def __init__(self, ruta):
@@ -28,7 +29,18 @@ class Electrodata():
         # [(16-02-2024 20:46, 10), ()]
         return datetimes, consumo
 
-# Para probar el código de pandas
+class RedElectrica():
+    def __init__(self, lang:str):
+        self.url = "https://apidatos.ree.es/"
+        self.lang = lang
+
+    def generacion(self, inicio, fin):
+        datos = requests.get(f"{self.url}{self.lang}/datos/generacion/estructura-generacion?start_date={inicio}&end_date={fin}&time_trunc=day").json()
+        return datos
+
+
 if __name__ == '__main__':
-    datos = Electrodata("electrodatos/datos/electrodatos.csv")
-    print(datos.cliente(8))
+#     datos = Electrodata("electrodatos/datos/electrodatos.csv")
+#     print(datos.cliente(8))
+    ree = RedElectrica('es')
+    print(ree.generacion('2024-02-0200:00', '2024-02-0400:00'))
