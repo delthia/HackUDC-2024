@@ -1,9 +1,10 @@
+from electro_db import ConsumoElectrico
 import pandas as pd
 import requests, json
 
 class Electrodata():
     def __init__(self, ruta):
-        self.datos = pd.read_csv(ruta)
+        self.datos = ConsumoElectrico(path = ruta)
         self.datos.rename(
             columns = {
                 'Código universal de punto de suministro': 'Cliente',
