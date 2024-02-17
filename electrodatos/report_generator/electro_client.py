@@ -1,6 +1,5 @@
-from electrodatos.report_generator.annual_report import AnnualReport
+from electrodatos.report_generator.Modalidad import AnnualReport, MonthlyReport
 from datetime import date
-import pandas as pd
 
 class ClientElectro:
     """"Agrupa los atributos y métodos útiles para describir a un cliente"""
@@ -10,10 +9,12 @@ class ClientElectro:
     def electro_report(self, reporte: str, year: int, month: int = None):
         if reporte == 'Annual':
             return AnnualReport(self.id_client, year)
+        elif reporte == 'Monthly':
+            return MonthlyReport(self.id_client, year, month)
 
 if __name__ == '__main__':
     client_0 = ClientElectro(id_client = 0)
-    inicio = date(2022, 1, 1); fin = date(2022, 12, 31)
+    # inicio = date(2022, 1, 1); fin = date(2022, 12, 31)
     # reporte_client_0 = client_0.electro_report('Annual', 2023)
-    x = client_0.electro_report('Annual', 2023).range_consume(inicio, fin)
+    x = client_0.electro_report('Monthly', 2023, 1).max_consumption#.range_consume(inicio, fin)
     print(x)
