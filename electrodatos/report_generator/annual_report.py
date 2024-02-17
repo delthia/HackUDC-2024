@@ -67,6 +67,7 @@ class AnnualReport:
             (inicio <= self.__data_client.Fecha) &
             (self.__data_client.Fecha <= fin)
             ]
+        df_rangecons = df_rangecons.groupby(by = 'Fecha').agg({'Consumo': 'sum'})
         return df_rangecons.loc[:, ['Fecha', 'Consumo']]
     
     @property
