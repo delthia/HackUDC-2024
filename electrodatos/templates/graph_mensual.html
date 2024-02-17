@@ -1,0 +1,22 @@
+<div id="consumo-mensual">
+    <h1>Tu consumo en <span style="color: var(--accent)">{{ m[month] }} de {{ year }}</span></h1>
+    <div>
+        <canvas id="mes"></canvas>
+    </div>
+    <script>
+        // Gráfico con el consumo del último año
+        new Chart(document.getElementById('mes'), {
+        type: 'line',
+        data: {
+        labels: {{ mes.fechas | safe }},
+        datasets: [{ label: 'kWh', data: {{ mes.datos }}, borderWidth: 1 }]
+        },
+        options: { scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+    <div class="control-fecha">
+        <span class="anterior" hx-get="/api/htmx/grafico_mensual/{{ month -  1}}/{{ year}}/{{ id_cliente }}" hx-trigger="click, throttle=500ms" hx-target="#consumo-mensual"><</span>
+        <span class="valor">{{ m[month] }} de {{ year }}</span>
+        <span class="siguiente" hx-get="/api/htmx/grafico_mensual/{{ month + 1 }}/{{ year }}/{{ id_cliente }}" hx-trigger="click, throttle=500ms" hx-target="#consumo-mensual">></span>
+    </div>
+</div>

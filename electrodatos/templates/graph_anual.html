@@ -11,12 +11,12 @@
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
             label: 'kWh {{ year }}',
-            data: {{ datos.curr }},
+            data: {{ meses.curr }},
             borderWidth: 1
         },
         {
             label: 'kWh {{ year - 1}}',
-            data: {{ datos.prev }},
+            data: {{ meses.prev }},
             borderWidth: 1
         }]
     },
@@ -24,7 +24,47 @@
     });
 </script>
 <div class="control-fecha">
-    <span class="anterior" hx-get="/api/htmx/grafico_anual/{{ year - 1 }}/{{ cliente }}" hx-target="#consumo-anual"><</span>
+    <span class="anterior" hx-get="/api/htmx/grafico_anual/{{ year - 1 }}/{{ cliente }}" hx-trigger="click, throttle=500ms" hx-target="#consumo-anual"><</span>
     <span class="valor">{{ year }}</span>
     <span class="siguiente" hx-get="/api/htmx/grafico_anual/{{ year + 1 }}/{{ cliente }}" hx-trigger="click, throttle=500ms" hx-target="#consumo-anual">></span>
+</div>
+<div class="lados">
+    <div class="small-chart">
+        <h2>Por <span class="underline">tramos horarios:</span></h2>
+        <canvas id="horario""></canvas>
+        <script>
+            new Chart(document.getElementById('horario'), {
+            type: 'polarArea',
+            data: {
+                // labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
+                labels: ['12:00-18:00 (Mediodía)', '18:00-00:00 (Tarde)', '00:00-06:00 (Noche)', '06:00-12:00 (Mañana)'],
+                datasets: [{
+                    label: 'kWh',
+                    data: {{ horario }},
+                    borderWidth: 1
+                },
+                ]
+            },
+            });
+        </script>
+    </div>
+    <div class="small-chart">
+        <h2>Por <span class="underline">días de la semana:</span></h2>
+        <canvas id="semanal"></canvas>
+        <script>
+        new Chart(document.getElementById('semanal'), {
+            type: 'line',
+            data: {
+                labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+                datasets: [{
+                    label: 'kWh',
+                    data: {{ semanal }},
+                    borderWidth: 1
+                },
+                ]
+            },
+            });
+        </script>
+        <canvas id="semana""></canvas>
+    </div>
 </div>

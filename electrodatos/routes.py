@@ -3,6 +3,7 @@ from flask import render_template, request, Response
 from datetime import datetime
 from datetime import date
 from electrodatos.report_generator import ClientElectro
+from dateutil.relativedelta import relativedelta
 
 @app.route("/")
 def homepage():
@@ -14,7 +15,8 @@ def clients():
 
 @app.route("/cliente/<int:id_cliente>")
 def cliente(id_cliente):
-    return render_template("cliente.html", cliente = id_cliente, year = 2023, meses=api_anos(id_cliente, 2023), mes=api_rango(id_cliente, date(2023,2,1), date(2023, 2, 28)), horario=api_dia(id_cliente, 2023), semanal=api_semana(id_cliente, 2023))
+    year, month = 2023, 2
+    return render_template("cliente.html", cliente = id_cliente, year = year, meses=api_anos(id_cliente, year), mes=api_rango(id_cliente, date(year, month, 1), date(year, month, 28)), horario=api_dia(id_cliente, year), semanal=api_semana(id_cliente, 2023), m = {1: 'enero', 2: 'febrero', 3: 'marzo', 4: 'abril', 5: 'mayo', 6: 'junio', 7: 'julio', 8: 'agosto', 9: 'septiembre', 10: 'octubre', 11: 'noviembre', 12: 'diciembre'}, month=month)
 
 def api_rango(id_cliente, inicio, fin):
     seleccion = ClientElectro(id_cliente).electro_report().range_consume(inicio, fin).to_dict()
@@ -40,4 +42,11 @@ def api_dia(id_cliente, ano):
 
 @app.route("/api/htmx/grafico_anual/<int:year>/<int:id_cliente>")
 def grafico_anual(year, id_cliente):
-    return render_template('graph_anual.html', year=year, cliente=id_cliente, datos=api_anos(id_cliente, year))
+    return render_template("graph_anual.html", cliente = id_cliente, year = year, meses=api_anos(id_cliente, year), horario=api_dia(id_cliente, year), semanal=api_semana(id_cliente, year))
+
+@app.route("/api/htmx/grafico_mensual/<int:month>/<int:year>/<int:id_cliente>")
+def grafico_mensual(month, year, id_cliente):
+    if month > 12:
+        month = 1
+        year += 1
+    return render_template("graph_mensual.html", id_cliente = id_cliente, year=year, mes=api_rango(id_cliente, date(year, month, 1), date(year, month, 1)+relativedelta(months=1)), m = {1: 'enero', 2: 'febrero', 3: 'marzo', 4: 'abril', 5: 'mayo', 6: 'junio', 7: 'julio', 8: 'agosto', 9: 'septiembre', 10: 'octubre', 11: 'noviembre', 12: 'diciembre'}, month=month)
