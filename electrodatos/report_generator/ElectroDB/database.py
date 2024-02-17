@@ -7,8 +7,10 @@ class ConsumoElectrico:
     y estimado de un hogar a una hora determinada y 
     medida en KW/h
     """
-    def __init__(self, path):
-        self.__df_electrodatos = pd.read_csv(path)
+    def __init__(self):
+        self.__df_electrodatos = pd.read_csv(
+            '/home/carlosfol/My_Documents/Git_Projects/ElectroDatos/HackUDC-2024/electrodatos/datos/electrodatos.csv'
+            )
         self.__df_electrodatos.rename(
             columns = {
                 'Código universal de punto de suministro': 'Cliente',
