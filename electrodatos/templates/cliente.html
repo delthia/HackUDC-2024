@@ -5,7 +5,7 @@
     <h1>Hola, cliente nº {{ cliente }}</h1>
     <hr>
     <p>Tu consumo en {{ year}}</p>
-    <!--<script src="/api/consumo/rango?cliente={{ cliente }}&inicio=2022-07-01&fin=2022-07-02"></script>-->
+    <script src="/api/consumo/rango?cliente={{ cliente }}&inicio=2022-07-01&fin=2022-07-02"></script>
     <div>
         <canvas id="anual"></canvas>
     </div>
@@ -25,14 +25,14 @@
     const horario = document.getElementById('horario');
 
     // Gráfico con el consumo del último año
-    /* new Chart(anual, {
+    new Chart(anual, {
     type: 'line',
     data: {
         labels: fechas,
         datasets: [{ label: 'kWh', data: datos, borderWidth: 1 }]
     },
     options: { scales: { y: { beginAtZero: true } } }
-    }); */
+    });
 
     // Gráfico con la comparación por meses
     new Chart(meses, {

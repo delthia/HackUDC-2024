@@ -27,5 +27,5 @@ def datos_ejemplo():
     electrodatos = ClientElectro(id_cliente).electro_report('Annual', 2023)
     inicio, fin = date.fromisoformat(request.args.get('inicio', type=str)), date.fromisoformat(request.args.get('fin', type=str))
     
-    seleccion = ClientElectro(8).electro_report('Annual', 2023).range_consume(inicio, fin).to_dict()
-    return [(seleccion['Consumo'][i], seleccion['Fecha'][i]) for i in seleccion['Consumo']]
+    seleccion = ClientElectro(id_cliente).electro_report('Annual', 2023).range_consume(inicio, fin).to_dict()
+    return f"fechas = {[ str(seleccion['Fecha'][i]) for i in seleccion['Fecha'] ]}; datos = {[ seleccion['Consumo'][i] for i in seleccion['Consumo'] ]};"
