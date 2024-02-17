@@ -5,7 +5,13 @@
     <h1>Hola, cliente nº {{ cliente }}</h1>
     <hr>
     <p>Tu consumo en {{ year}}</p>
-    <script src="/api/consumo/rango?cliente={{ cliente }}&inicio=2022-07-01&fin=2022-07-02"></script>
+    <div class="control-fecha">
+        <span class="anterior"><</span>
+        <span class="valor">'mes' 'año'</span>
+        <span class="siguiente">></span>
+    </div>
+    <script src="/api/consumo/rango?cliente={{ cliente }}&inicio=2022-07-01&fin=2022-07-31"></script>
+    <script src="/api/consumo/dia?cliente={{ cliente }}&fecha=2022-07-01"></script>
     <div>
         <canvas id="anual"></canvas>
     </div>
@@ -40,12 +46,12 @@
     data: {
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
-            label: '% 2022',
+            label: 'kWh 2022',
             data: [0.5, 0.5, 1, .25, 2.5, 3, 2, 2, 3, 1.5, 3, 3, .5],
             borderWidth: 1
         },
         {
-            label: '%2023',
+            label: 'kWh 2023',
             data: [1, .5, 1.5, .5, 2, 2.5, 2, 2.5, 1.5, 2.5, 3, 4, 1.5, .75],
             borderWidth: 1
         }]
@@ -54,12 +60,13 @@
     });
 
     new Chart(horario, {
-    type: 'radar',
+    type: 'polarArea',
     data: {
-        labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
+        // labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
+        labels: ['12:00-18:00 (Mediodía)', '18:00-00:00 (Tarde)', '00:00-06:00 (Noche)', '06:00-12:00 (Mañana)'],
         datasets: [{
             label: 'kWh',
-            data: [0.211, 0.182, 0.228, 0.151, 0.192, 0.194, 0.221, 0.327, 0.341, 0.233, 0.237, 0.274, 0.216, 0.1, 0.073, 0.083, 0.073, 0.073, 0.078, 0.077, 0.076, 0.479, 0.214, 0.2],
+            data: consumos,
             borderWidth: 1
         },
         ]

@@ -22,10 +22,30 @@ def cliente(id_cliente):
     return f"Eres el cliente {id_cliente}"
 
 @app.route("/api/consumo/rango")
-def datos_ejemplo():
+def api_rango():
     id_cliente = request.args.get('cliente', type=int)
     electrodatos = ClientElectro(id_cliente).electro_report('Annual', 2023)
     inicio, fin = date.fromisoformat(request.args.get('inicio', type=str)), date.fromisoformat(request.args.get('fin', type=str))
     
     seleccion = ClientElectro(id_cliente).electro_report('Annual', 2023).range_consume(inicio, fin).to_dict()
     return f"fechas = {[ str(seleccion['Fecha'][i]) for i in seleccion['Fecha'] ]}; datos = {[ seleccion['Consumo'][i] for i in seleccion['Consumo'] ]};"
+
+@app.route("/api/consumo/dia")
+def api_dia():
+    id_cliente = request.args.get('cliente', type=int)
+    fecha = date.fromisoformat(request.args.get('fecha', type=str))
+    dia = ClientElectro(id_cliente).electro_report('Day', date=fecha).day_db
+
+    print(dia)
+
+    return f"consumos = {[sum(dia[i:i+6]) for i in range(0, 24, 6)]};"
+
+@app.route("/api/consumo/ano")
+def api_ano():
+    id_cliente = request.args.get('cliente', type=int)
+    year = request.args.get('ano', type=int)
+    ano = ClientElectro(id_cliente).electro_report('Annual', year=year).monthly_comparison
+
+    print(ano)
+    d = ano.to_dict()['Consumo']
+    return [ d[i] if i in d.keys() else 0 for i in range(1, 13)]

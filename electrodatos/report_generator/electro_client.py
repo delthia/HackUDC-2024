@@ -1,16 +1,18 @@
-from electrodatos.report_generator.Modalidad import AnnualReport, MonthlyReport
-from datetime import date
+from electrodatos.report_generator.Modalidad import AnnualReport, MonthlyReport, DayReport
+from datetime import datetime
 
 class ClientElectro:
     """"Agrupa los atributos y métodos útiles para describir a un cliente"""
     def __init__(self, id_client):
         self.id_client = id_client
     
-    def electro_report(self, reporte: str, year: int, month: int = None):
+    def electro_report(self, reporte: str = None, year: int = None, month: int = None, date: datetime = None):
         if reporte == 'Annual':
             return AnnualReport(self.id_client, year)
         elif reporte == 'Monthly':
             return MonthlyReport(self.id_client, year, month)
+        elif reporte == 'Day':
+            return DayReport(self.id_client, date)
 
 if __name__ == '__main__':
     client_0 = ClientElectro(id_client = 0)
