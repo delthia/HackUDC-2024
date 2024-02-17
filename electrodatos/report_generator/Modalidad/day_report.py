@@ -9,4 +9,5 @@ class DayReport(ReportGenerator):
     @property
     def day_consume(self):
         """Devuelve el consumo eléctrico del día seleccionado"""
-        return self.database[self.database['Fecha'] == self.dt]
+        dia = self.database[self.database['Fecha'] == self.dt] 
+        return dia['Consumo'][5:].to_list() + dia['Consumo'][:5].to_list()

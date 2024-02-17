@@ -107,3 +107,7 @@ h2 {
     text-decoration: underline;
     text-decoration-color: var(--accent);
 }
+
+.control-fecha {
+    margin: 0 auto;
+}

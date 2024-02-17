@@ -1,0 +1,30 @@
+<h1>Tu consumo en <span style="color: var(--accent)">{{ year }}</span></h1>
+<p>Comparación del consumo por meses con respecto al año anterior.</p>
+<div>
+    <canvas id="meses"></canvas>
+</div>
+<script>
+    // Gráfico con la comparación por meses
+    new Chart(document.getElementById('meses'), {
+    type: 'bar',
+    data: {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        datasets: [{
+            label: 'kWh {{ year }}',
+            data: {{ datos.curr }},
+            borderWidth: 1
+        },
+        {
+            label: 'kWh {{ year - 1}}',
+            data: {{ datos.prev }},
+            borderWidth: 1
+        }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+    });
+</script>
+<div class="control-fecha">
+    <span class="anterior" hx-get="/api/htmx/grafico_anual/{{ year - 1 }}/{{ cliente }}" hx-target="#consumo-anual"><</span>
+    <span class="valor">{{ year }}</span>
+    <span class="siguiente" hx-get="/api/htmx/grafico_anual/{{ year + 1 }}/{{ cliente }}" hx-trigger="click, throttle=500ms" hx-target="#consumo-anual">></span>
+</div>

@@ -1,5 +1,4 @@
 from electrodatos.report_generator.ElectroDB import electro_data
-# from ElectroDB import electro_data
 import pandas as pd
 
 class ReportGenerator:
@@ -41,7 +40,7 @@ class ReportGenerator:
         """
         df_timecons = self.database.groupby(by = 'Hora').agg({'Consumo': 'mean'})
         df_timecons.sort_index(inplace = True)
-        return df_timecons
+        return df_timecons['Consumo'][11:].to_list()+df_timecons['Consumo'][:11].to_list()
     
     def range_consume(self, inicio, fin) -> pd.DataFrame:
         """Consumo electrico en la un rango establecido"""
