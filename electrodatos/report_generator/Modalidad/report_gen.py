@@ -43,4 +43,5 @@ class ReportGenerator:
             (self.database.Fecha <= fin)
             ]
         df_rangecons = df_rangecons.groupby(by = 'Fecha').agg({'Consumo': 'sum'})
+        df_rangecons.reset_index(inplace = True)
         return df_rangecons.loc[:, ['Fecha', 'Consumo']]
