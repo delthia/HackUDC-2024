@@ -24,10 +24,10 @@ def cliente(id_cliente):
 @app.route("/api/consumo/rango")
 def api_rango():
     id_cliente = request.args.get('cliente', type=int)
-    electrodatos = ClientElectro(id_cliente).electro_report('Annual', 2023)
+    # electrodatos = ClientElectro(id_cliente).electro_report('Annual', 2023)
     inicio, fin = date.fromisoformat(request.args.get('inicio', type=str)), date.fromisoformat(request.args.get('fin', type=str))
     
-    seleccion = ClientElectro(id_cliente).electro_report('Annual', 2023).range_consume(inicio, fin).to_dict()
+    seleccion = ClientElectro(id_cliente).electro_report().range_consume(inicio, fin).to_dict()
     return f"fechas = {[ str(seleccion['Fecha'][i]) for i in seleccion['Fecha'] ]}; datos = {[ seleccion['Consumo'][i] for i in seleccion['Consumo'] ]};"
 
 @app.route("/api/consumo/dia")
@@ -65,7 +65,7 @@ def api_semana():
     mes = request.args.get('ano', type=int)
     ano = request.args.get('mes', type=int)
 
-    consumo = ClientElectro(id_cliente).electro_report('Monthly', year=ano, month=mes).week_comparison.to_dict()['Consumo']
+    consumo = ClientElectro(id_cliente).electro_report('Monthly', year=ano, month=mes).weekday_comparison.to_dict()['Consumo']
     print(consumo)
     # return f"semanal = {[ consumo[i] if i in consumo.keys() else 0 for i in range(0, 7)]};"
     return f"semanal = {[ consumo[i] for i in consumo]}"

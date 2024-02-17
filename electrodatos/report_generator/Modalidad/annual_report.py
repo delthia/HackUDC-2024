@@ -32,11 +32,10 @@ class AnnualReport(ReportGenerator):
         df_trimcons = df_trimcons.groupby(by = 'Trim').agg({'Consumo': 'sum'})
         return df_trimcons
     
-    # @property
+    @property
     def annual_comparison(self) -> pd.DataFrame:
         """Comparación con el año anterior"""
         df_oldata = AnnualReport(id_client = self.id_client, year = self.year - 1)
-        print(df_oldata.database)
         df_comparison = pd.merge(
             left = self.monthly_comparison,
             right = df_oldata.monthly_comparison,
