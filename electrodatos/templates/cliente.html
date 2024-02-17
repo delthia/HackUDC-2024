@@ -12,6 +12,7 @@
     </div>
     <script src="/api/consumo/rango?cliente={{ cliente }}&inicio=2022-07-01&fin=2022-07-31"></script>
     <script src="/api/consumo/dia?cliente={{ cliente }}&fecha=2022-07-01"></script>
+    <script src="/api/consumo/comp_anos?cliente={{ cliente }}&ano=2023"></script>
     <div>
         <canvas id="anual"></canvas>
     </div>
@@ -46,13 +47,13 @@
     data: {
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
-            label: 'kWh 2022',
-            data: [0.5, 0.5, 1, .25, 2.5, 3, 2, 2, 3, 1.5, 3, 3, .5],
+            label: 'kWh 2023',
+            data: curr,
             borderWidth: 1
         },
         {
-            label: 'kWh 2023',
-            data: [1, .5, 1.5, .5, 2, 2.5, 2, 2.5, 1.5, 2.5, 3, 4, 1.5, .75],
+            label: 'kWh 2022',
+            data: prev,
             borderWidth: 1
         }]
     },

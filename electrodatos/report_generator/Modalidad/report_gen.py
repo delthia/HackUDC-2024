@@ -23,7 +23,9 @@ class ReportGenerator:
         df_weekcons = df_weekcons.groupby(by = 'WeekDay').agg({'Consumo': 'mean',
                                                              'Consumo': 'std'})
         df_weekcons.sort_index(inplace = True)
-        df_weekcons.index = df_weekcons.index.map(lambda x: day_names[x])
+        # df_weekcons.index = df_weekcons.index.map(lambda x: day_names[x])
+        if df_weekcons.shape[0] < 7:
+            df_weekcons = df_weekcons.reindex(range(7), fill_value=0)
         return df_weekcons
     
     @property

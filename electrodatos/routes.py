@@ -46,6 +46,27 @@ def api_ano():
     year = request.args.get('ano', type=int)
     ano = ClientElectro(id_cliente).electro_report('Annual', year=year).monthly_comparison
 
-    print(ano)
     d = ano.to_dict()['Consumo']
-    return [ d[i] if i in d.keys() else 0 for i in range(1, 13)]
+    # return [ d[i] if i in d.keys() else 0 for i in range(1, 13)]
+    return [d[i] for i in d]
+
+@app.route("/api/consumo/comp_anos")
+def api_anos():
+    id_cliente = request.args.get('cliente', type=int)
+    year = request.args.get('ano', type=int)
+    
+    years = ClientElectro(id_cliente).electro_report('Annual', year=year).annual_comparison.to_dict()
+
+    return f"curr = {list(years[f'Consumo_{year}'].values())}; prev = {list(years[f'Consumo_{year-1}'].values())};"
+
+@app.route("/api/consumo/dia_semana")
+def api_semana():
+    id_cliente = request.args.get('cliente', type=int)
+    mes = request.args.get('ano', type=int)
+    ano = request.args.get('mes', type=int)
+
+    consumo = ClientElectro(id_cliente).electro_report('Monthly', year=ano, month=mes).week_comparison.to_dict()['Consumo']
+    print(consumo)
+    # return f"semanal = {[ consumo[i] if i in consumo.keys() else 0 for i in range(0, 7)]};"
+    return f"semanal = {[ consumo[i] for i in consumo]}"
+    # return ClientElectro(id_cliente).electro_report('Monthly', year=ano, month=mes).week_comparison.to_dict()

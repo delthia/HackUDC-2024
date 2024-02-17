@@ -19,6 +19,8 @@ class AnnualReport(ReportGenerator):
         """Presenta el consumo eléctrico de cada mes"""
         df_monthcons = self.year_db.groupby(by = 'Month').agg({'Consumo': 'sum'})
         df_monthcons.sort_index(inplace = True)
+        if df_monthcons.shape[0] < 12:
+            df_monthcons = df_monthcons.reindex(range(1, 13), fill_value=0)
         # df_monthcons.index = [month_name[m] for m in df_monthcons.index]
         return df_monthcons
     
